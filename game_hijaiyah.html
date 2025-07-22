@@ -94,37 +94,39 @@
 
     <script>
         // Data huruf Hijaiyah dan URL audio masing-masing.
+        // Harakat Fathah (\u064e) ditambahkan ke setiap huruf.
         // PENTING: GANTI URL DI BAWAH DENGAN URL FILE AUDIO REKAMAN ANDA SENDIRI!
-        // Anda bisa mengunggah file audio ke layanan hosting gratis atau menyimpannya secara lokal jika Anda membangun aplikasi native.
+        // Jika Anda memiliki rekaman audio huruf dengan harakat, gunakan itu.
+        // Jika tidak, audio yang ada (tanpa harakat) masih bisa berfungsi untuk pengenalan huruf dasar.
         const hijaiyahLetters = [
-            { letter: "ا", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/1._A_uyy5qe.mp3" },
-            { letter: "ب", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/2._Ba_ncsg0j.mp3" },
-            { letter: "ت", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/3._ta_zqjpng.mp3" },
-            { letter: "ث", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/4._tsa_vro8jq.mp3" },
-            { letter: "ج", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/5._ja_njbn5s.mp3" },
-            { letter: "ح", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/6._ha_boaj9n.mp3" },
-            { letter: "خ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/7._kho_nih1nx.mp3" },
-            { letter: "د", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/8._da_shytpz.mp3" },
-            { letter: "ذ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/9._dza_z0ctpl.mp3" },
-            { letter: "ر", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/10._ra_txhclr.mp3" },
-            { letter: "ز", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/11._dza_it26hq.mp3" },
-            { letter: "س", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/12._sa_ijwqqd.mp3" },
-            { letter: "ش", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/13._sya_nysuje.mp3" },
-            { letter: "ص", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/14._sho_pxqjor.mp3" },
-            { letter: "ض", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/15._dzho_arlcff.mp3" },
-            { letter: "ط", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/16._to_mm386u.mp3" },
-            { letter: "ظ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/17._dzooo_znc5e4.mp3" },
-            { letter: "ع", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078290/18._a_l0lxof.mp3" },
-            { letter: "غ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078293/19._gho_eserc5.mp3" },
-            { letter: "ف", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/20._fa_e3i3tb.mp3" },
-            { letter: "ق", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/21._Qo_letumd.mp3" },
-            { letter: "ك", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/22_ka_u8ryfm.mp3" },
-            { letter: "ل", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/23._la_kxa9ks.mp3" },
-            { letter: "م", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078295/24._ma_lfvarh.mp3" },
-            { letter: "ن", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/25._na_o3m09t.mp3" },
-            { letter: "ه", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/27._He_oypqqw.mp3" },
-            { letter: "و", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/26._wa_daxzol.mp3" },
-            { letter: "ي", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/28._ya_dftlj7.mp3" }
+            { letter: "ا\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/1._A_uyy5qe.mp3" },
+            { letter: "ب\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/2._Ba_ncsg0j.mp3" },
+            { letter: "ت\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/3._ta_zqjpng.mp3" },
+            { letter: "ث\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/4._tsa_vro8jq.mp3" },
+            { letter: "ج\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/5._ja_njbn5s.mp3" },
+            { letter: "ح\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/6._ha_boaj9n.mp3" },
+            { letter: "خ\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/7._kho_nih1nx.mp3" },
+            { letter: "د\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/8._da_shytpz.mp3" },
+            { letter: "ذ\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/9._dza_z0ctpl.mp3" },
+            { letter: "ر\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/10._ra_txhclr.mp3" },
+            { letter: "ز\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/11._dza_it26hq.mp3" },
+            { letter: "س\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/12._sa_ijwqqd.mp3" },
+            { letter: "ش\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/13._sya_nysuje.mp3" },
+            { letter: "ص\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/14._sho_pxqjor.mp3" },
+            { letter: "ض\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/15._dzho_arlcff.mp3" },
+            { letter: "ط\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/16._to_mm386u.mp3" },
+            { letter: "ظ\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/17._dzooo_znc5e4.mp3" },
+            { letter: "ع\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078290/18._a_l0lxof.mp3" },
+            { letter: "غ\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078293/19._gho_eserc5.mp3" },
+            { letter: "ف\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/20._fa_e3i3tb.mp3" },
+            { letter: "ق\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/21._Qo_letumd.mp3" },
+            { letter: "ك\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/22_ka_u8ryfm.mp3" },
+            { letter: "ل\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/23._la_kxa9ks.mp3" },
+            { letter: "م\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078295/24._ma_lfvarh.mp3" },
+            { letter: "ن\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/25._na_o3m09t.mp3" },
+            { letter: "ه\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/27._He_oypqqw.mp3" },
+            { letter: "و\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/26._wa_daxzol.mp3" },
+            { letter: "ي\u064e", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/28._ya_dftlj7.mp3" }
         ];
 
         let targetLetter = {}; // Objek huruf target (termasuk huruf dan audio)
@@ -213,7 +215,8 @@
                 const block = document.createElement('div');
                 block.classList.add('letter-block');
                 block.textContent = item.letter;
-                block.dataset.letter = item.letter; // Simpan huruf di dataset
+                // Penting: dataset.letter menyimpan huruf tanpa harakat untuk perbandingan yang benar
+                block.dataset.letter = item.letter.replace('\u064e', '');
                 block.addEventListener('click', handleLetterClick);
                 gameBoard.appendChild(block);
             });
@@ -253,14 +256,15 @@
             if (isGameLocked) return; // Abaikan klik jika game terkunci
 
             const clickedBlock = event.currentTarget;
+            // Ambil huruf dari dataset, yang tidak memiliki harakat
             const clickedLetter = clickedBlock.dataset.letter;
 
             isGameLocked = true; // Kunci interaksi sementara
 
-            if (clickedLetter === targetLetter.letter) {
+            // Bandingkan huruf yang diklik dengan huruf target (juga tanpa harakat untuk perbandingan)
+            if (clickedLetter === targetLetter.letter.replace('\u064e', '')) {
                 // Jawaban benar
                 clickedBlock.classList.add('correct');
-                // Panggil playAudio dengan URL suara benar, bukan sebagai main audio
                 playAudio('https://res.cloudinary.com/defhizor0/video/upload/v1753088240/benar_nay_nprt3v.mp3', false);
                 feedbackMessage.textContent = "Alhamdulillah, adek benar!";
                 feedbackMessage.classList.remove('text-red-600');
@@ -271,7 +275,6 @@
             } else {
                 // Jawaban salah
                 clickedBlock.classList.add('wrong');
-                // Panggil playAudio dengan URL suara salah, bukan sebagai main audio
                 playAudio('https://res.cloudinary.com/defhizor0/video/upload/v1753088240/salah_nay_hq36lw.mp3', false);
                 feedbackMessage.textContent = "Masyaallah, di coba lagi ya adek!";
                 feedbackMessage.classList.remove('text-green-600');
