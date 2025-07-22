@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Dengarkan & Sentuh Huruf Hijaiyah</title>
-    <link rel="manifest" href="/manifest.json">
     <!-- Memuat Tailwind CSS untuk styling yang mudah dan responsif -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -14,12 +13,12 @@
         }
         /* Gaya dasar untuk blok huruf */
         .letter-block {
-            width: 100px;
-            height: 100px;
+            width: 100%; /* Menggunakan lebar penuh dari kolom grid */
+            height: 80px; /* Tinggi tetap agar konsisten */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem; /* Ukuran huruf Hijaiyah */
+            font-size: 2.8rem; /* Ukuran huruf Hijaiyah, sedikit lebih kecil agar muat */
             font-weight: bold;
             border-radius: 1rem;
             background-color: #F3F4F6; /* Warna abu-abu muda default */
@@ -62,33 +61,33 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-200 to-purple-300 min-h-screen flex items-center justify-center p-4">
+<body class="bg-gradient-to-br from-blue-200 to-purple-300 min-h-screen flex items-center justify-center p-4 sm:p-8">
 
-    <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-2xl w-full text-center flex flex-col items-center space-y-8">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-4 pop-in">Dengarkan & Sentuh Huruf Hijaiyah</h1>
+    <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl max-w-xl w-full text-center flex flex-col items-center space-y-6 sm:space-y-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2 sm:mb-4 pop-in leading-tight">Dengarkan & Sentuh Huruf Hijaiyah</h1>
 
         <!-- Area untuk perintah suara -->
-        <div class="flex flex-col items-center space-y-4 pop-in">
-            <p class="text-2xl font-semibold text-gray-700">Manakah huruf:</p>
-            <button id="speakButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div class="flex flex-col items-center space-y-3 sm:space-y-4 pop-in">
+            <p class="text-xl sm:text-2xl font-semibold text-gray-700">Manakah huruf:</p>
+            <button id="speakButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-xl shadow-lg transition transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1V9a1 1 0 011-1h1.586l4.707-4.707A1 1 0 0112 3v18a1 1 0 01-1.707.707L5.586 15z" />
                 </svg>
                 Dengarkan
             </button>
-            <p id="currentLetterDisplay" class="text-3xl font-bold text-gray-900 mt-2"></p>
+            <p id="currentLetterDisplay" class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2"></p>
         </div>
 
         <!-- Area untuk papan game (pilihan huruf) -->
-        <div id="gameBoard" class="grid grid-cols-4 sm:grid-cols-5 gap-4 mt-6 pop-in">
+        <div id="gameBoard" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4 mt-4 sm:mt-6 pop-in w-full">
             <!-- Blok huruf akan dibuat di sini oleh JavaScript -->
         </div>
 
         <!-- Area untuk pesan feedback -->
-        <div id="feedback" class="feedback-message text-2xl font-bold mt-6"></div>
+        <div id="feedback" class="feedback-message text-xl sm:text-2xl font-bold mt-4"></div>
 
         <!-- Tombol untuk memulai ulang game -->
-        <button id="resetButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition transform hover:scale-105 pop-in mt-8">
+        <button id="resetButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-xl shadow-lg transition transform hover:scale-105 pop-in mt-6 sm:mt-8">
             Mulai Game Baru
         </button>
     </div>
@@ -98,34 +97,34 @@
         // PENTING: GANTI URL DI BAWAH DENGAN URL FILE AUDIO REKAMAN ANDA SENDIRI!
         // Anda bisa mengunggah file audio ke layanan hosting gratis atau menyimpannya secara lokal jika Anda membangun aplikasi native.
         const hijaiyahLetters = [
-            { letter: "ا", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/1._A_uyy5qe.mp3" }, // Placeholder: Ganti dengan suara 'Alif'
-            { letter: "ب", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/2._Ba_ncsg0j.mp3" }, // Placeholder: Ganti dengan suara 'Ba'
-            { letter: "ت", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/3._ta_zqjpng.mp3" }, // Placeholder: Ganti dengan suara 'Ta'
-            { letter: "ث", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/4._tsa_vro8jq.mp3" }, // Placeholder: Ganti dengan suara 'Tsa'
-            { letter: "ج", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/5._ja_njbn5s.mp3" }, // Placeholder: Ganti dengan suara 'Jim'
-            { letter: "ح", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/6._ha_boaj9n.mp3" }, // Placeholder: Ganti dengan suara 'Ha'
-            { letter: "خ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/7._kho_nih1nx.mp3" }, // Placeholder: Ganti dengan suara 'Kho'
-            { letter: "د", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/8._da_shytpz.mp3" }, // Placeholder: Ganti dengan suara 'Dal'
-            { letter: "ذ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/9._dza_z0ctpl.mp3" }, // Placeholder: Ganti dengan suara 'Dzal'
-            { letter: "ر", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/10._ra_txhclr.mp3" }, // Placeholder: Ganti dengan suara 'Ro'
-            { letter: "ز", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/11._dza_it26hq.mp3" }, // Placeholder: Ganti dengan suara 'Zay'
-            { letter: "س", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/12._sa_ijwqqd.mp3" }, // Placeholder: Ganti dengan suara 'Sin'
-            { letter: "ش", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/13._sya_nysuje.mp3" }, // Placeholder: Ganti dengan suara 'Syin'
-            { letter: "ص", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/14._sho_pxqjor.mp3" }, // Placeholder: Ganti dengan suara 'Shod'
-            { letter: "ض", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/15._dzho_arlcff.mp3" }, // Placeholder: Ganti dengan suara 'Dhod'
-            { letter: "ط", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/16._to_mm386u.mp3" }, // Placeholder: Ganti dengan suara 'Tho'
-            { letter: "ظ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/17._dzooo_znc5e4.mp3" }, // Placeholder: Ganti dengan suara 'Zho'
-            { letter: "ع", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078290/18._a_l0lxof.mp3" }, // Placeholder: Ganti dengan suara 'Ain'
-            { letter: "غ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078293/19._gho_eserc5.mp3" }, // Placeholder: Ganti dengan suara 'Ghoin'
-            { letter: "ف", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/20._fa_e3i3tb.mp3" }, // Placeholder: Ganti dengan suara 'Fa'
-            { letter: "ق", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/21._Qo_letumd.mp3" }, // Placeholder: Ganti dengan suara 'Qof'
-            { letter: "ك", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/22_ka_u8ryfm.mp3" }, // Placeholder: Ganti dengan suara 'Kaf'
-            { letter: "ل", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/23._la_kxa9ks.mp3" }, // Placeholder: Ganti dengan suara 'Lam'
-            { letter: "م", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078295/24._ma_lfvarh.mp3" }, // Placeholder: Ganti dengan suara 'Mim'
-            { letter: "ن", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/25._na_o3m09t.mp3" }, // Placeholder: Ganti dengan suara 'Nun'
-            { letter: "ه", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/27._He_oypqqw.mp3" }, // Placeholder: Ganti dengan suara 'Ha'
-            { letter: "و", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/26._wa_daxzol.mp3" }, // Placeholder: Ganti dengan suara 'Waw'
-            { letter: "ي", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/28._ya_dftlj7.mp3" }  // Placeholder: Ganti dengan suara 'Ya'
+            { letter: "ا", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/1._A_uyy5qe.mp3" },
+            { letter: "ب", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/2._Ba_ncsg0j.mp3" },
+            { letter: "ت", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/3._ta_zqjpng.mp3" },
+            { letter: "ث", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/4._tsa_vro8jq.mp3" },
+            { letter: "ج", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/5._ja_njbn5s.mp3" },
+            { letter: "ح", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078280/6._ha_boaj9n.mp3" },
+            { letter: "خ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/7._kho_nih1nx.mp3" },
+            { letter: "د", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/8._da_shytpz.mp3" },
+            { letter: "ذ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/9._dza_z0ctpl.mp3" },
+            { letter: "ر", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078284/10._ra_txhclr.mp3" },
+            { letter: "ز", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/11._dza_it26hq.mp3" },
+            { letter: "س", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078285/12._sa_ijwqqd.mp3" },
+            { letter: "ش", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/13._sya_nysuje.mp3" },
+            { letter: "ص", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/14._sho_pxqjor.mp3" },
+            { letter: "ض", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/15._dzho_arlcff.mp3" },
+            { letter: "ط", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/16._to_mm386u.mp3" },
+            { letter: "ظ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078289/17._dzooo_znc5e4.mp3" },
+            { letter: "ع", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078290/18._a_l0lxof.mp3" },
+            { letter: "غ", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078293/19._gho_eserc5.mp3" },
+            { letter: "ف", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/20._fa_e3i3tb.mp3" },
+            { letter: "ق", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/21._Qo_letumd.mp3" },
+            { letter: "ك", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/22_ka_u8ryfm.mp3" },
+            { letter: "ل", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078294/23._la_kxa9ks.mp3" },
+            { letter: "م", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078295/24._ma_lfvarh.mp3" },
+            { letter: "ن", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/25._na_o3m09t.mp3" },
+            { letter: "ه", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/27._He_oypqqw.mp3" },
+            { letter: "و", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078298/26._wa_daxzol.mp3" },
+            { letter: "ي", audio: "https://res.cloudinary.com/defhizor0/video/upload/v1753078299/28._ya_dftlj7.mp3" }
         ];
 
         let targetLetter = {}; // Objek huruf target (termasuk huruf dan audio)
@@ -317,19 +316,5 @@
             startNewRound(); // Mulai putaran pertama secara otomatis (tanpa suara langsung)
         };
     </script>
-    <script>
-  // Daftarkan Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        })
-        .catch(err => {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-    });
-  }
-</script>
 </body>
 </html>
